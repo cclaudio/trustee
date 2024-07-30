@@ -23,6 +23,8 @@ use anyhow::{anyhow, bail, Context, Result};
 use attestation::AttestationService;
 use jwt_simple::prelude::Ed25519PublicKey;
 #[cfg(feature = "resource")]
+use resource::plugin::RepositoryPluginManagerConfig;
+#[cfg(feature = "resource")]
 use resource::RepositoryConfig;
 use semver::{BuildMetadata, Prerelease, Version, VersionReq};
 #[cfg(feature = "as")]
@@ -113,6 +115,8 @@ pub struct ApiServer {
     #[cfg(feature = "resource")]
     repository_config: RepositoryConfig,
     #[cfg(feature = "resource")]
+    plugin_manager_config: RepositoryPluginManagerConfig,
+    #[cfg(feature = "resource")]
     attestation_token_config: AttestationTokenVerifierConfig,
     #[cfg(feature = "policy")]
     policy_engine_config: PolicyEngineConfig,
@@ -132,6 +136,7 @@ impl ApiServer {
         http_timeout: i64,
         insecure_api: bool,
         #[cfg(feature = "resource")] repository_config: RepositoryConfig,
+        #[cfg(feature = "resource")] plugin_manager_config: RepositoryPluginManagerConfig,
         #[cfg(feature = "resource")] attestation_token_config: AttestationTokenVerifierConfig,
         #[cfg(feature = "policy")] policy_engine_config: PolicyEngineConfig,
     ) -> Result<Self> {
@@ -159,6 +164,8 @@ impl ApiServer {
             insecure_api,
             #[cfg(feature = "resource")]
             repository_config,
+            #[cfg(feature = "resource")]
+            plugin_manager_config,
             #[cfg(feature = "resource")]
             attestation_token_config,
             #[cfg(feature = "policy")]
@@ -257,6 +264,9 @@ impl ApiServer {
         let repository = self.repository_config.initialize()?;
 
         #[cfg(feature = "resource")]
+        let repository_plugin_manager = self.plugin_manager_config.create_plugin_manager()?;
+
+        #[cfg(feature = "resource")]
         let token_verifier =
             crate::token::create_token_verifier(self.attestation_token_config.clone())?;
 
@@ -301,6 +311,7 @@ impl ApiServer {
             cfg_if::cfg_if! {
                 if #[cfg(feature = "resource")] {
                     server_app = server_app.app_data(web::Data::new(repository.clone()))
+                    .app_data(web::Data::new(repository_plugin_manager.clone()))
                     .app_data(web::Data::new(token_verifier.clone()))
                     .service(
                         web::resource([
