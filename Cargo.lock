@@ -503,7 +503,7 @@ source = "git+https://github.com/confidential-containers/guest-components.git?re
 dependencies = [
  "anyhow",
  "async-trait",
- "attester",
+ "attester 0.1.0 (git+https://github.com/confidential-containers/guest-components.git?rev=9bd6f06a9704e01808e91abde130dffb20e632a5)",
  "base64 0.21.7",
  "config",
  "const_format",
@@ -562,7 +562,7 @@ dependencies = [
 [[package]]
 name = "attester"
 version = "0.1.0"
-source = "git+https://github.com/confidential-containers/guest-components.git?rev=9bd6f06a9704e01808e91abde130dffb20e632a5#9bd6f06a9704e01808e91abde130dffb20e632a5"
+source = "git+https://github.com/cclaudio/guest-components.git?rev=69c72cf81aaf50f7c1b705c9b439bc21db1cce93#69c72cf81aaf50f7c1b705c9b439bc21db1cce93"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -590,6 +590,25 @@ dependencies = [
  "tempfile",
  "thiserror",
  "tokio",
+]
+
+[[package]]
+name = "attester"
+version = "0.1.0"
+source = "git+https://github.com/confidential-containers/guest-components.git?rev=9bd6f06a9704e01808e91abde130dffb20e632a5#9bd6f06a9704e01808e91abde130dffb20e632a5"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "base64 0.21.7",
+ "hex",
+ "kbs-types",
+ "log",
+ "serde",
+ "serde_json",
+ "serde_with",
+ "sha2",
+ "strum",
+ "thiserror",
 ]
 
 [[package]]
@@ -1368,7 +1387,7 @@ checksum = "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7"
 [[package]]
 name = "crypto"
 version = "0.1.0"
-source = "git+https://github.com/confidential-containers/guest-components.git?rev=9bd6f06a9704e01808e91abde130dffb20e632a5#9bd6f06a9704e01808e91abde130dffb20e632a5"
+source = "git+https://github.com/cclaudio/guest-components.git?rev=69c72cf81aaf50f7c1b705c9b439bc21db1cce93#69c72cf81aaf50f7c1b705c9b439bc21db1cce93"
 dependencies = [
  "aes-gcm",
  "anyhow",
@@ -2794,18 +2813,18 @@ dependencies = [
 [[package]]
 name = "kbs_protocol"
 version = "0.1.0"
-source = "git+https://github.com/confidential-containers/guest-components.git?rev=9bd6f06a9704e01808e91abde130dffb20e632a5#9bd6f06a9704e01808e91abde130dffb20e632a5"
+source = "git+https://github.com/cclaudio/guest-components.git?rev=69c72cf81aaf50f7c1b705c9b439bc21db1cce93#69c72cf81aaf50f7c1b705c9b439bc21db1cce93"
 dependencies = [
  "anyhow",
  "async-trait",
- "attester",
+ "attester 0.1.0 (git+https://github.com/cclaudio/guest-components.git?rev=69c72cf81aaf50f7c1b705c9b439bc21db1cce93)",
  "base64 0.21.7",
  "crypto",
  "jwt-simple 0.12.9",
  "kbs-types",
  "log",
  "reqwest 0.12.4",
- "resource_uri",
+ "resource_uri 0.1.0 (git+https://github.com/cclaudio/guest-components.git?rev=69c72cf81aaf50f7c1b705c9b439bc21db1cce93)",
  "serde",
  "serde_json",
  "sha2",
@@ -2833,7 +2852,7 @@ dependencies = [
  "prost 0.11.9",
  "rand",
  "reqwest 0.12.4",
- "resource_uri",
+ "resource_uri 0.1.0 (git+https://github.com/confidential-containers/guest-components.git?rev=9bd6f06a9704e01808e91abde130dffb20e632a5)",
  "ring 0.17.8",
  "serde",
  "serde_json",
@@ -4249,6 +4268,17 @@ dependencies = [
  "web-sys",
  "webpki-roots 0.26.1",
  "winreg 0.52.0",
+]
+
+[[package]]
+name = "resource_uri"
+version = "0.1.0"
+source = "git+https://github.com/cclaudio/guest-components.git?rev=69c72cf81aaf50f7c1b705c9b439bc21db1cce93#69c72cf81aaf50f7c1b705c9b439bc21db1cce93"
+dependencies = [
+ "anyhow",
+ "serde",
+ "serde_json",
+ "url",
 ]
 
 [[package]]
