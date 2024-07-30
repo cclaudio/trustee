@@ -1,4 +1,4 @@
-FROM rust:latest as builder
+FROM public.ecr.aws/docker/library/rust:latest as builder
 ARG ARCH=x86_64
 ARG HTTPS_CRYPTO=rustls
 ARG ALIYUN=false
