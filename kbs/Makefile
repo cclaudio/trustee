@@ -1,5 +1,6 @@
 AS_TYPE ?= coco-as
 ALIYUN ?= false
+NEBULA_CA ?= false
 
 BUILD_ARCH := $(shell uname -m)
 ARCH ?= $(shell uname -m)
@@ -46,6 +47,10 @@ endif
 
 ifeq ($(ALIYUN), true)
   FEATURES += aliyun
+endif
+
+ifeq ($(NEBULA_CA), true)
+  FEATURES += nebula-ca
 endif
 
 ifndef CLI_FEATURES

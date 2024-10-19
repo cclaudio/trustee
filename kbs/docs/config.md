@@ -250,6 +250,35 @@ This is also called "Repository" in old versions. The properties to be configure
 | `password`        | String | AAP client key password           | Yes      | `8f9989c18d27...`                                   |
 | `cert_pem`        | String | CA cert for the KMS instance      | Yes      | `-----BEGIN CERTIFICATE----- ...`                   |
 
+#### Nebula CA Configuration
+
+The `name` field is `nebula-ca` to enable this plugin.
+
+The plugin can generate credentials for CoCo PODs (or VMs) that want to
+join a Nebula encrypted overlay network. The properties below can be
+used to configure the plugin.
+
+| Property               | Type   | Description                       | Required | Example                                             |
+|------------------------|--------|-----------------------------------|----------|-----------------------------------------------------|
+| `nebula_cert_bin_path` | String | nebula-cert binary path | Yes | `/usr/local/bin/nebula-cert` |
+| `work_dir`             | String | This plugin work directory, it requires `rw` permission | Yes | `/opt/confidential-containers/kbs/nebula-ca` |
+
+The following properties can be set under the `[self_signed_ca]` plugin section to configure the Nebula Certificate Authority.
+The Nebula CA will be re-created only if `${work_dir}/ca/ca.{key,crt}` are not found.
+
+| Property            | Type    | Description                       | Required | Default | Example                                   |
+|---------------------|---------|-----------------------------------|----------|-----------------------------------------------------|
+| `name`              | String  | Name of the certificate authority | Yes      |         | `Nebula Ca for Trustee KBS` |
+| `argon_iterations`  | Integer | Argon2 iterations parameter used for encrypted private key passphrase | No  | 1 | |
+| `argon_memory`      | Integer | Argon2 memory parameter (in KiB) used for encrypted private key passphrase  | No | 2097152 | |
+| `argon_parallelism` | Integer | Argon2 parallelism parameter used for encrypted private key passphrase | No | 4 | |
+| `curve`             | String  | EdDSA/ECDSA Curve (25519, P256) | No | `25519` | |
+| `duration`          | String  | Amount of time the certificate should be valid for. Valid time units are: <hours>"h"<minutes>"m"<seconds>"s" | No | `8760h0m0s` | |
+| `groups`            | String  | Comma separated list of groups. This will limit which groups subordinate certs can use | No | | `server,ssh` |
+| `ips`               | String  | Comma separated list of ipv4 address and network in CIDR notation. This will limit which ipv4 addresses and networks subordinate certs can use for ip addresses | No | | `192.168.100.10/24,192.168.100.15/24` |
+| `out_qr`            | String  | Path to write a QR code image (png) of the certificate | No | | `/opt/confidential-containers/kbs/nebula_ca/ca_qr.crt`|
+| `subnets`           | String  | Comma separated list of ipv4 address and network in CIDR notation. This will limit which ipv4 addresses and networks subordinate certs can use in subnets | No | | `192.168.86.0/24` |
+
 ## Configuration Examples
 
 Using a built-in CoCo AS:
@@ -283,6 +312,13 @@ policy_engine = "opa"
 name = "resource"
 type = "LocalFs"
 dir_path = "/opt/confidential-containers/kbs/repository"
+
+[[plugins]]
+name = "nebula-ca"
+nebula_cert_bin_path = "/usr/local/bin/nebula-cert"
+work_dir = "/opt/confidential-containers/kbs/nebula-ca"
+    [plugins.settings]
+    name = "Nebula CA for Trustee KBS"
 ```
 
 Using a remote CoCo AS:
@@ -302,6 +338,13 @@ as_addr = "http://127.0.0.1:50004"
 name = "resource"
 type = "LocalFs"
 dir_path = "/opt/confidential-containers/kbs/repository"
+
+[[plugins]]
+name = "nebula-ca"
+nebula_cert_bin_path = "/usr/local/bin/nebula-cert"
+work_dir = "/opt/confidential-containers/kbs/nebula-ca"
+    [plugins.settings]
+    name = "Nebula CA for Trustee KBS"
 ```
 
 Running with Intel Trust Authority attestation service:
