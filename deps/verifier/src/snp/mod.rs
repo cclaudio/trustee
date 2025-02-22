@@ -40,7 +40,7 @@ pub struct Snp {
 pub(crate) fn load_milan_cert_chain() -> &'static Result<VendorCertificates> {
     static MILAN_CERT_CHAIN: OnceLock<Result<VendorCertificates>> = OnceLock::new();
     MILAN_CERT_CHAIN.get_or_init(|| {
-        let certs = X509::stack_from_pem(include_bytes!("milan_ask_ark_asvk.pem"))?;
+        let certs = X509::stack_from_pem(include_bytes!("genoa_ask_ark_asvk.pem"))?;
         if certs.len() != 3 {
             bail!("Malformed Milan ASK/ARK/ASVK");
         }
@@ -60,7 +60,7 @@ pub(crate) fn fetch_vcek_from_kds(report: &AttestationReport) -> Result<Vec<u8>>
     let url: String = format!(
         "https://kdsintf.amd.com/vcek/v1/{}/\
         {}?blSPL={:02}&teeSPL={:02}&snpSPL={:02}&ucodeSPL={:02}",
-        "Milan",
+        "Genoa",
         hw_id,
         report.reported_tcb.bootloader,
         report.reported_tcb.tee,
