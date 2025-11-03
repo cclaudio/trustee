@@ -1,8 +1,8 @@
 # rust:1.89.0-slim
-FROM --platform=${BUILDPLATFORM:-linux/amd64} \
-    docker.io/library/rust@sha256:6c828d9865870a3bc8c02919d73803df22cac59b583d8f2cb30a296abe64748f \
+FROM --platform=${BUILDPLATFORM:-linux/s390x} \
+    docker.io/library/rust@sha256:28f3f21fd3bc1dbbf04c5af2ad27078bd8989a170d3258f2ac529cbca7e9aed9 \
     AS builder
-ARG ARCH=x86_64
+ARG ARCH=s390x
 ARG ALIYUN=false
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -45,8 +45,8 @@ RUN cd kbs && make AS_FEATURE=coco-as-builtin FEATURES=pkcs11 ALIYUN=${ALIYUN} A
     make ARCH=${ARCH} install-kbs
 
 # ubuntu:24.04
-FROM ubuntu@sha256:7c06e91f61fa88c08cc74f7e1b7c69ae24910d745357e0dfe1d2c0322aaf20f9
-ARG ARCH=x86_64
+FROM docker.io/library/ubuntu@sha256:b5f6e36f1ab500cbe168708acdb1a658e3e30d47508b645b081ca95f0464ee68
+ARG ARCH=s390x
 
 WORKDIR /tmp
 
