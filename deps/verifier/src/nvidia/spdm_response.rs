@@ -467,6 +467,10 @@ pub enum OpaqueDataType {
     PositionId = 24,
     LockSwitchStatus = 25,
     GpuLinkConn = 32,
+    SysEnableStatus = 33,
+    OpaqueDataVersion = 34,
+    ChipInfo = 35,
+    FeatureFlag = 36,
     #[default]
     Invalid = 255,
 }
@@ -499,6 +503,10 @@ impl OpaqueDataType {
             24 => Some(OpaqueDataType::PositionId),
             25 => Some(OpaqueDataType::LockSwitchStatus),
             32 => Some(OpaqueDataType::GpuLinkConn),
+            33 => Some(OpaqueDataType::SysEnableStatus),
+            34 => Some(OpaqueDataType::OpaqueDataVersion),
+            35 => Some(OpaqueDataType::ChipInfo),
+            36 => Some(OpaqueDataType::FeatureFlag),
             _ => None,
         }
     }
@@ -536,6 +544,10 @@ impl fmt::Display for OpaqueDataType {
             OpaqueDataType::PositionId => write!(f, "position_id"),
             OpaqueDataType::LockSwitchStatus => write!(f, "lock_switch_status"),
             OpaqueDataType::GpuLinkConn => write!(f, "gpu_link_conn"),
+            OpaqueDataType::SysEnableStatus => write!(f, "sys_enable_status"),
+            OpaqueDataType::OpaqueDataVersion => write!(f, "opaque_data_version"),
+            OpaqueDataType::ChipInfo => write!(f, "chip_info"),
+            OpaqueDataType::FeatureFlag => write!(f, "feature_flag"),
             OpaqueDataType::Invalid => write!(f, "invalid"),
         }
     }
